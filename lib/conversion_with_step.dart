@@ -94,28 +94,28 @@ void main() {
         switch (whatUwantToConvert) {
           case "1":
             try {
-              // TODO : Octal To Biner
+              print("Octal ke biner ${octalToBiner(inputNumber ?? "0")}");
             } catch (e) {
               print("Konversi gagal $e");
             }
             break;
           case "2":
             try {
-              // TODO : Octal To Octal
+              print("$inputNumber");
             } catch (e) {
               print("Konversi gagal $e");
             }
             break;
           case "3":
             try {
-              // TODO : Octal To Decimal
+              print("Oktal ke decimal ${octalToDecimal(inputNumber ?? "0")}");
             } catch (e) {
               print("Konversi gagal $e");
             }
             break;
           case "4":
             try {
-              // TODO : Octal To Hexa
+              print("Oktal ke hexa ${octalToHexadecimal(inputNumber ?? "0")}");
             } catch (e) {
               print("Konversi gagal $e");
             }
@@ -251,7 +251,7 @@ void main() {
 }
 
 
-String? binerToOctal(String biner){
+String binerToOctal(String biner){
   while (biner.length % 3 != 0) {
     biner = "0$biner";
   }
@@ -274,7 +274,7 @@ String? binerToOctal(String biner){
   return octal;
 }
 
-int? binerToDecimal(String biner){
+int binerToDecimal(String biner){
   int pangkat = 0;
   int decimal = 0;
 
@@ -316,12 +316,68 @@ String binerToHexa(String biner) {
 }
 
 //TODO : Octal To Biner
+
+String octalToBiner(String octal){
+  Map<String, String> octalToBinerMap = {
+    "0": "000", "1": "001", "2": "010", "3": "011",
+    "4": "100", "5": "101", "6": "110", "7": "111"
+  };
+
+  String biner = "";
+
+  for (int i = 0; i < octal.length; i++) {
+    String chunk = octal[i];
+    print("Iterasi ke ${biner.length + 1} : $chunk");
+    biner += octalToBinerMap[chunk]!;
+  }
+
+  print("----------------------+");
+
+  return biner;
+}
+
 //TODO : Octal To Decimal
+
+String octalToDecimal(String octal){
+  int decimal = 0;
+  int pangkat = 0;
+
+  for (int i = octal.length - 1; i >= 0; i--) {
+    int bit = int.parse(octal[i]);
+    int nilaiPangkat = 1 << (3 * pangkat);
+    print("$bit x 8^$pangkat = ${bit * nilaiPangkat}");
+    decimal += bit * nilaiPangkat;
+    pangkat++;
+  }
+  print("--------------------+");
+  return decimal.toString();
+}
+
 //TODO : Octal To Hexa
+
+String octalToHexadecimal(String octal){
+  String decimal = octalToDecimal(octal);
+  return decimalToHexadecimal(int.parse(decimal));
+}
 
 //TODO : Decimal To Biner
 //TODO : Decimal To Octal
 //TODO : Decimal To Hexa
+String decimalToHexadecimal(int decimal) {
+  if (decimal == 0) return "0";
+
+  String hexa = "";
+  String hexDigits = "0123456789ABCDEF";
+
+  while (decimal > 0) {
+    int remainder = decimal % 16;
+    hexa = hexDigits[remainder] + hexa;
+    decimal ~/= 16;
+  }
+
+  return hexa;
+}
+
 
 //TODO : Hexa To Biner
 //TODO : Hexa To Octal
