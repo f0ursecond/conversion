@@ -43,7 +43,16 @@ void multiplyBinary(String bin1, String bin2) {
     result = temp;
   }
 
-  print(' $result');
+  print('$result\n');
+  print("Hasil perkalian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(bin1, radix: 2);
+  int result2 = int.parse(bin2, radix: 2);
+
+  print(result1);
+  print(result2);
+  print('---- *');
+  print('${result1 * result2}');
 }
 
 void multiplyOctal(String oct1, String oct2) {
@@ -83,13 +92,10 @@ void multiplyOctal(String oct1, String oct2) {
   for (String partial in partialResults) {
     String temp = '';
     int carry = 0;
-    int maxLen =
-        partial.length > result.length ? partial.length : result.length;
+    int maxLen = partial.length > result.length ? partial.length : result.length;
     for (int i = 0; i < maxLen; i++) {
-      int digit1 =
-          i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
-      int digit2 =
-          i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
+      int digit1 = i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
+      int digit2 = i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
       int sum = digit1 + digit2 + carry;
       temp = (sum % 8).toString() + temp;
       carry = sum ~/ 8;
@@ -138,13 +144,10 @@ void multiplyDecimal(String dec1, String dec2) {
   for (String partial in partialResults) {
     String temp = '';
     int carry = 0;
-    int maxLen =
-        partial.length > result.length ? partial.length : result.length;
+    int maxLen = partial.length > result.length ? partial.length : result.length;
     for (int i = 0; i < maxLen; i++) {
-      int digit1 =
-          i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
-      int digit2 =
-          i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
+      int digit1 = i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
+      int digit2 = i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
       int sum = digit1 + digit2 + carry;
       temp = (sum % 10).toString() + temp;
       carry = sum ~/ 10;
@@ -157,9 +160,9 @@ void multiplyDecimal(String dec1, String dec2) {
 }
 
 void addBinary(String bin1, String bin2) {
-  print('Hasil Penjumlahan Biner:');
+  print('Hasil Penjumlahan Biner : ');
   print('\n$bin1');
-  print('$bin2');
+  print(bin2);
   print('---- +');
 
   int maxLen = bin1.length > bin2.length ? bin1.length : bin2.length;
@@ -177,7 +180,20 @@ void addBinary(String bin1, String bin2) {
   }
   if (carry > 0) result = carry.toString() + result;
 
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil penjumlahan ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(bin1, radix: 2);
+  int result2 = int.parse(bin2, radix: 2);
+
+  print(result1);
+  print(result2);
+  print('---- +');
+  print('${result1 + result2}');
+
+  // print("Hasilnya ketika dikonversi menjadi desimal : \n");
+  // print('$result biner = ${binerToDecimal(result)} desimal');
 }
 
 void subtractBinary(String bin1, String bin2) {
@@ -207,7 +223,17 @@ void subtractBinary(String bin1, String bin2) {
   while (result.startsWith('0') && result.length > 1) {
     result = result.substring(1);
   }
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil pengurangan ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(bin1, radix: 2);
+  int result2 = int.parse(bin2, radix: 2);
+
+  print(result1);
+  print(result2);
+  print('---- -');
+  print('${result1 - result2}');
 }
 
 void divideBinary(String bin1, String bin2) {
@@ -236,7 +262,17 @@ void divideBinary(String bin1, String bin2) {
     result = (quotient % 2).toString() + result;
     quotient ~/= 2;
   }
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil pembagian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(bin1, radix: 2);
+  int result2 = int.parse(bin2, radix: 2);
+
+  print(result1);
+  print(result2);
+  print('---- :');
+  print('${result1 / result2}');
 }
 
 void addOctal(String oct1, String oct2) {
@@ -518,15 +554,10 @@ void multiplyHexa(String hex1, String hex2) {
   for (String partial in partialResults) {
     String temp = '';
     int carry = 0;
-    int maxLen =
-        partial.length > result.length ? partial.length : result.length;
+    int maxLen = partial.length > result.length ? partial.length : result.length;
     for (int i = 0; i < maxLen; i++) {
-      int digit1 = i < result.length
-          ? hexToDec[result[result.length - 1 - i].toUpperCase()]!
-          : 0;
-      int digit2 = i < partial.length
-          ? hexToDec[partial[partial.length - 1 - i].toUpperCase()]!
-          : 0;
+      int digit1 = i < result.length ? hexToDec[result[result.length - 1 - i].toUpperCase()]! : 0;
+      int digit2 = i < partial.length ? hexToDec[partial[partial.length - 1 - i].toUpperCase()]! : 0;
       int sum = digit1 + digit2 + carry;
       temp = decToHex[sum % 16]! + temp;
       carry = sum ~/ 16;

@@ -46,45 +46,33 @@ int binerToDecimal(String biner) {
   return decimal;
 }
 
-String binerToHexa(String biner) {
-  while (biner.length % 4 != 0) {
-    biner = "0$biner";
+String binerToHexa(String binary) {
+  if (binary.isEmpty) return "0";
+
+  // Pastikan panjang biner kelipatan 4 dengan padding 0 di depan
+  while (binary.length % 4 != 0) {
+    binary = "0" + binary;
   }
 
-  Map<String, String> hexMap = {
-    "0000": "0",
-    "0001": "1",
-    "0010": "2",
-    "0011": "3",
-    "0100": "4",
-    "0101": "5",
-    "0110": "6",
-    "0111": "7",
-    "1000": "8",
-    "1001": "9",
-    "1010": "A",
-    "1011": "B",
-    "1100": "C",
-    "1101": "D",
-    "1110": "E",
-    "1111": "F"
-  };
+  print("Langkah-langkah konversi Biner ke Hexadesimal:");
 
-  String hexa = "";
+  String hexResult = "";
+  String hexDigits = "0123456789ABCDEF";
 
-  print("Langkah langkah konversi biner ke hexadesimal : ");
+  for (int i = 0; i < binary.length; i += 4) {
+    String chunk = binary.substring(i, i + 4);
 
-  for (int i = 0; i < biner.length; i += 4) {
-    String chunk = biner.substring(i, i + 4);
-    String hexValue = hexMap[chunk]!;
+    // Gunakan fungsi binaryToDecimal buat dapetin nilai desimalnya
+    int decimalValue = binerToDecimal(chunk);
 
-    print("Iterasi ke-${hexa.length + 1}: $chunk → $hexValue");
-    hexa += hexMap[chunk]!;
+    // Cetak proses konversi desimal ke heksadesimal
+    print("Iterasi ke-${(i ~/ 4) + 1}: $chunk → $decimalValue → ${hexDigits[decimalValue]}");
+
+    hexResult += hexDigits[decimalValue];
   }
 
   print("----------------------+");
-
-  return hexa;
+  return hexResult;
 }
 
 String octalToBiner(String octal) {
@@ -169,13 +157,16 @@ String decimalToBiner(int decimal) {
 
   print("Langkah-langkah konversi Decimal ke Biner:");
 
-  while (num > 0) {
+  while (num >= 2) {
     int remainder = num % 2;
     print("$num ÷ 2 = ${num ~/ 2}, sisa = $remainder");
 
     result = remainder.toString() + result;
     num = num ~/ 2;
   }
+
+  print("Sisa terakhir = $num");
+  result = num.toString() + result;
 
   print("--------------------+");
   return result;
@@ -191,13 +182,16 @@ String decimalToOctal(int decimal) {
 
   print("Langkah-langkah konversi Decimal ke Oktal:");
 
-  while (num > 0) {
+  while (num >= 8) {
     int remainder = num % 8;
     print("$num ÷ 8 = ${num ~/ 8}, sisa = $remainder");
 
     result = remainder.toString() + result;
     num = num ~/ 8;
   }
+
+  print("Sisa terakhir = $num");
+  result = num.toString() + result;
 
   print("--------------------+");
   return result;
@@ -211,13 +205,17 @@ String decimalToHexadecimal(int decimal) {
 
   print("Langkah-langkah konversi Decimal ke Hexadesimal:");
 
-  while (decimal > 0) {
+  while (decimal >= 16) {
     int remainder = decimal % 16;
     print("$decimal ÷ 16 = ${decimal ~/ 16}, sisa = ${hexDigits[remainder]}");
 
     hexa = hexDigits[remainder] + hexa;
     decimal ~/= 16;
   }
+
+  // Langsung print sisa terakhirnya
+  print("Sisa terakhir = ${hexDigits[decimal]}");
+  hexa = hexDigits[decimal] + hexa;
 
   print("--------------------+");
   return hexa;
