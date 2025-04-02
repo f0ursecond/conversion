@@ -1,164 +1,3 @@
-void multiplyBinary(String bin1, String bin2) {
-  print('Hasil:');
-  print('\n$bin1');
-  print('$bin2');
-  print('---- *');
-
-  List<String> partialResults = [];
-
-  // Perkalian manual biner
-  for (int i = bin2.length - 1; i >= 0; i--) {
-    if (bin2[i] == '1') {
-      String partial = bin1;
-      // Geser ke kiri sesuai posisi
-      for (int j = 0; j < bin2.length - 1 - i; j++) {
-        partial += '0';
-      }
-      partialResults.add(partial);
-      print(' $partial');
-    } else {
-      String zeros = '0' * bin1.length;
-      for (int j = 0; j < bin2.length - 1 - i; j++) {
-        zeros += '0';
-      }
-      partialResults.add(zeros);
-      print(' $zeros');
-    }
-  }
-
-  print('---- +');
-
-  // Penjumlahan biner manual
-  String result = '0' * (bin1.length + bin2.length);
-  for (String partial in partialResults) {
-    String temp = '';
-    int carry = 0;
-    for (int i = result.length - 1; i >= 0; i--) {
-      int bit1 = int.parse(result[i]);
-      int bit2 = i < partial.length ? int.parse(partial[i]) : 0;
-      int sum = bit1 + bit2 + carry;
-      temp = (sum % 2).toString() + temp;
-      carry = sum ~/ 2;
-    }
-    result = temp;
-  }
-
-  print('$result\n');
-  print("Hasil perkalian ketika dikonversi menjadi desimal : \n");
-
-  int result1 = int.parse(bin1, radix: 2);
-  int result2 = int.parse(bin2, radix: 2);
-
-  print(result1);
-  print(result2);
-  print('---- *');
-  print('${result1 * result2}');
-}
-
-void multiplyOctal(String oct1, String oct2) {
-  print('Hasil:');
-  print('\n$oct1');
-  print('$oct2');
-  print('---- *');
-
-  List<String> partialResults = [];
-
-  // Perkalian manual oktal
-  for (int i = oct2.length - 1; i >= 0; i--) {
-    int digit = int.parse(oct2[i]);
-    int carry = 0;
-    String partial = '';
-
-    for (int j = oct1.length - 1; j >= 0; j--) {
-      int num = int.parse(oct1[j]);
-      int product = num * digit + carry;
-      partial = (product % 8).toString() + partial;
-      carry = product ~/ 8;
-    }
-    if (carry > 0) partial = carry.toString() + partial;
-
-    // Tambah nol sesuai posisi
-    for (int k = 0; k < oct2.length - 1 - i; k++) {
-      partial += '0';
-    }
-    partialResults.add(partial);
-    print(' $partial');
-  }
-
-  print('---- +');
-
-  // Penjumlahan oktal manual
-  String result = '0';
-  for (String partial in partialResults) {
-    String temp = '';
-    int carry = 0;
-    int maxLen = partial.length > result.length ? partial.length : result.length;
-    for (int i = 0; i < maxLen; i++) {
-      int digit1 = i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
-      int digit2 = i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
-      int sum = digit1 + digit2 + carry;
-      temp = (sum % 8).toString() + temp;
-      carry = sum ~/ 8;
-    }
-    if (carry > 0) temp = carry.toString() + temp;
-    result = temp;
-  }
-
-  print(' $result');
-}
-
-void multiplyDecimal(String dec1, String dec2) {
-  print('Hasil:');
-  print('\n$dec1');
-  print('$dec2');
-  print('---- *');
-
-  List<String> partialResults = [];
-
-  // Perkalian manual desimal
-  for (int i = dec2.length - 1; i >= 0; i--) {
-    int digit = int.parse(dec2[i]);
-    int carry = 0;
-    String partial = '';
-
-    for (int j = dec1.length - 1; j >= 0; j--) {
-      int num = int.parse(dec1[j]);
-      int product = num * digit + carry;
-      partial = (product % 10).toString() + partial;
-      carry = product ~/ 10;
-    }
-    if (carry > 0) partial = carry.toString() + partial;
-
-    // Tambah nol sesuai posisi
-    for (int k = 0; k < dec2.length - 1 - i; k++) {
-      partial += '0';
-    }
-    partialResults.add(partial);
-    print(' $partial');
-  }
-
-  print('---- +');
-
-  // Penjumlahan desimal manual
-  String result = '0';
-  for (String partial in partialResults) {
-    String temp = '';
-    int carry = 0;
-    int maxLen = partial.length > result.length ? partial.length : result.length;
-    for (int i = 0; i < maxLen; i++) {
-      int digit1 = i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
-      int digit2 = i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
-      int sum = digit1 + digit2 + carry;
-      temp = (sum % 10).toString() + temp;
-      carry = sum ~/ 10;
-    }
-    if (carry > 0) temp = carry.toString() + temp;
-    result = temp;
-  }
-
-  print(' $result');
-}
-
 void addBinary(String bin1, String bin2) {
   print('Hasil Penjumlahan Biner : ');
   print('\n$bin1');
@@ -240,7 +79,7 @@ void divideBinary(String bin1, String bin2) {
   print('Hasil Pembagian Biner:');
   print('\n$bin1');
   print('$bin2');
-  print('---- /');
+  print('---- :');
 
   // Konversi ke integer untuk mempermudah pembagian, tapi tetap manual
   int num1 = 0, num2 = 0;
@@ -275,6 +114,63 @@ void divideBinary(String bin1, String bin2) {
   print('${result1 / result2}');
 }
 
+void multiplyBinary(String bin1, String bin2) {
+  print('Hasil:');
+  print('\n$bin1');
+  print('$bin2');
+  print('---- *');
+
+  List<String> partialResults = [];
+
+  // Perkalian manual biner
+  for (int i = bin2.length - 1; i >= 0; i--) {
+    if (bin2[i] == '1') {
+      String partial = bin1;
+      // Geser ke kiri sesuai posisi
+      for (int j = 0; j < bin2.length - 1 - i; j++) {
+        partial += '0';
+      }
+      partialResults.add(partial);
+      print(' $partial');
+    } else {
+      String zeros = '0' * bin1.length;
+      for (int j = 0; j < bin2.length - 1 - i; j++) {
+        zeros += '0';
+      }
+      partialResults.add(zeros);
+      print(' $zeros');
+    }
+  }
+
+  print('---- +');
+
+  // Penjumlahan biner manual
+  String result = '0' * (bin1.length + bin2.length);
+  for (String partial in partialResults) {
+    String temp = '';
+    int carry = 0;
+    for (int i = result.length - 1; i >= 0; i--) {
+      int bit1 = int.parse(result[i]);
+      int bit2 = i < partial.length ? int.parse(partial[i]) : 0;
+      int sum = bit1 + bit2 + carry;
+      temp = (sum % 2).toString() + temp;
+      carry = sum ~/ 2;
+    }
+    result = temp;
+  }
+
+  print('$result\n');
+  print("Hasil perkalian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(bin1, radix: 2);
+  int result2 = int.parse(bin2, radix: 2);
+
+  print(result1);
+  print(result2);
+  print('---- *');
+  print('${result1 * result2}');
+}
+
 void addOctal(String oct1, String oct2) {
   print('Hasil Penjumlahan Oktal:');
   print('\n$oct1');
@@ -296,7 +192,17 @@ void addOctal(String oct1, String oct2) {
   }
   if (carry > 0) result = carry.toString() + result;
 
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil perkalian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(oct1, radix: 8);
+  int result2 = int.parse(oct2, radix: 8);
+
+  print(result1);
+  print(result2);
+  print('---- +');
+  print('${result1 + result2}');
 }
 
 void subtractOctal(String oct1, String oct2) {
@@ -326,14 +232,86 @@ void subtractOctal(String oct1, String oct2) {
   while (result.startsWith('0') && result.length > 1) {
     result = result.substring(1);
   }
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil pengurangan ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(oct1, radix: 8);
+  int result2 = int.parse(oct2, radix: 8);
+
+  print(result1);
+  print(result2);
+  print('---- -');
+  print('${result1 - result2}');
+}
+
+void multiplyOctal(String oct1, String oct2) {
+  print('Hasil:');
+  print('\n$oct1');
+  print('$oct2');
+  print('---- *');
+
+  List<String> partialResults = [];
+
+  // Perkalian manual oktal
+  for (int i = oct2.length - 1; i >= 0; i--) {
+    int digit = int.parse(oct2[i]);
+    int carry = 0;
+    String partial = '';
+
+    for (int j = oct1.length - 1; j >= 0; j--) {
+      int num = int.parse(oct1[j]);
+      int product = num * digit + carry;
+      partial = (product % 8).toString() + partial;
+      carry = product ~/ 8;
+    }
+    if (carry > 0) partial = carry.toString() + partial;
+
+    // Tambah nol sesuai posisi
+    for (int k = 0; k < oct2.length - 1 - i; k++) {
+      partial += '0';
+    }
+    partialResults.add(partial);
+    print(' $partial');
+  }
+
+  print('---- +');
+
+  // Penjumlahan oktal manual
+  String result = '0';
+  for (String partial in partialResults) {
+    String temp = '';
+    int carry = 0;
+    int maxLen = partial.length > result.length ? partial.length : result.length;
+    for (int i = 0; i < maxLen; i++) {
+      int digit1 = i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
+      int digit2 = i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
+      int sum = digit1 + digit2 + carry;
+      temp = (sum % 8).toString() + temp;
+      carry = sum ~/ 8;
+    }
+    if (carry > 0) temp = carry.toString() + temp;
+    result = temp;
+  }
+
+  print('$result\n');
+
+  print("Hasil perkalian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(oct1, radix: 8);
+  int result2 = int.parse(oct2, radix: 8);
+
+  print(result1);
+  print(result2);
+  print('---- *');
+  print('${result1 * result2}');
 }
 
 void divideOctal(String oct1, String oct2) {
   print('Hasil Pembagian Oktal:');
   print('\n$oct1');
   print('$oct2');
-  print('---- /');
+  print('---- :');
 
   int num1 = 0, num2 = 0;
   for (int i = 0; i < oct1.length; i++) {
@@ -354,7 +332,17 @@ void divideOctal(String oct1, String oct2) {
     result = (quotient % 8).toString() + result;
     quotient ~/= 8;
   }
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil pembagian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(oct1, radix: 8);
+  int result2 = int.parse(oct2, radix: 8);
+
+  print(result1);
+  print(result2);
+  print('---- :');
+  print('${result1 / result2}');
 }
 
 void addDecimal(String dec1, String dec2) {
@@ -411,11 +399,63 @@ void subtractDecimal(String dec1, String dec2) {
   print(' $result');
 }
 
+void multiplyDecimal(String dec1, String dec2) {
+  print('Hasil:');
+  print('\n$dec1');
+  print('$dec2');
+  print('---- *');
+
+  List<String> partialResults = [];
+
+  // Perkalian manual desimal
+  for (int i = dec2.length - 1; i >= 0; i--) {
+    int digit = int.parse(dec2[i]);
+    int carry = 0;
+    String partial = '';
+
+    for (int j = dec1.length - 1; j >= 0; j--) {
+      int num = int.parse(dec1[j]);
+      int product = num * digit + carry;
+      partial = (product % 10).toString() + partial;
+      carry = product ~/ 10;
+    }
+    if (carry > 0) partial = carry.toString() + partial;
+
+    // Tambah nol sesuai posisi
+    for (int k = 0; k < dec2.length - 1 - i; k++) {
+      partial += '0';
+    }
+    partialResults.add(partial);
+    print(' $partial');
+  }
+
+  print('---- +');
+
+  // Penjumlahan desimal manual
+  String result = '0';
+  for (String partial in partialResults) {
+    String temp = '';
+    int carry = 0;
+    int maxLen = partial.length > result.length ? partial.length : result.length;
+    for (int i = 0; i < maxLen; i++) {
+      int digit1 = i < result.length ? int.parse(result[result.length - 1 - i]) : 0;
+      int digit2 = i < partial.length ? int.parse(partial[partial.length - 1 - i]) : 0;
+      int sum = digit1 + digit2 + carry;
+      temp = (sum % 10).toString() + temp;
+      carry = sum ~/ 10;
+    }
+    if (carry > 0) temp = carry.toString() + temp;
+    result = temp;
+  }
+
+  print(' $result');
+}
+
 void divideDecimal(String dec1, String dec2) {
   print('Hasil Pembagian Desimal:');
   print('\n$dec1');
   print('$dec2');
-  print('---- /');
+  print('---- :');
 
   int num1 = int.parse(dec1);
   int num2 = int.parse(dec2);
@@ -487,7 +527,17 @@ void addHexa(String hex1, String hex2) {
   }
   if (carry > 0) result = decToHex[carry]! + result;
 
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil penjumlahan ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(hex1, radix: 16);
+  int result2 = int.parse(hex2, radix: 16);
+
+  print(result1);
+  print(result2);
+  print('---- +');
+  print('${result1 + result2}');
 }
 
 void subtractHexa(String hex1, String hex2) {
@@ -517,7 +567,17 @@ void subtractHexa(String hex1, String hex2) {
   while (result.startsWith('0') && result.length > 1) {
     result = result.substring(1);
   }
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil pengurangan ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(hex1, radix: 16);
+  int result2 = int.parse(hex2, radix: 16);
+
+  print(result1);
+  print(result2);
+  print('---- -');
+  print('${result1 - result2}');
 }
 
 void multiplyHexa(String hex1, String hex2) {
@@ -569,14 +629,24 @@ void multiplyHexa(String hex1, String hex2) {
   while (result.startsWith('0') && result.length > 1) {
     result = result.substring(1);
   }
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil perkalian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(hex1, radix: 16);
+  int result2 = int.parse(hex2, radix: 16);
+
+  print(result1);
+  print(result2);
+  print('---- +');
+  print('${result1 * result2}');
 }
 
 void divideHexa(String hex1, String hex2) {
   print('Hasil Pembagian Heksadesimal:');
   print('\n$hex1');
   print('$hex2');
-  print('---- /');
+  print('---- :');
 
   int num1 = 0, num2 = 0;
   for (int i = 0; i < hex1.length; i++) {
@@ -598,5 +668,15 @@ void divideHexa(String hex1, String hex2) {
     quotient ~/= 16;
   }
   if (result.isEmpty) result = '0';
-  print(' $result');
+  print('$result\n');
+
+  print("Hasil pembagian ketika dikonversi menjadi desimal : \n");
+
+  int result1 = int.parse(hex1, radix: 16);
+  int result2 = int.parse(hex2, radix: 16);
+
+  print(result1);
+  print(result2);
+  print('---- :');
+  print('${result1 / result2}');
 }
